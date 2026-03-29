@@ -1,0 +1,57 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.masewsg.app.ui'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 34
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+
+    // Compose
+    implementation platform(libs.androidx.compose.bom)
+    api libs.androidx.material3
+    // Optional - Integration with activities
+    api libs.androidx.activity.compose
+    // or only import the main APIs for the underlying toolkit systems,
+    // such as input and measurement/layout
+    api libs.androidx.ui
+    debugApi libs.androidx.ui.tooling
+    // Android Studio Preview support
+    api libs.androidx.ui.tooling.preview
+    api libs.androidx.ui.graphics
+    api libs.material3
+    api libs.androidx.foundation
+    api libs.navigation.compose
+}

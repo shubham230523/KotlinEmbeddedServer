@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
+
+android {
+
+    namespace 'com.shubham230523.app.embeddedserver'
+
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.shubham230523.app.embeddedserver"
+        minSdk 21
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+    packagingOptions {
+        jniLibs {
+            excludes += ['META-INF/*', 'META-INF/licenses/*']
+        }
+        resources {
+            excludes += ['META-INF/*', 'META-INF/licenses/*', '**/attach_hotspot_windows.dll']
+        }
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+}
+
+dependencies {
+
+    // Core
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.core.splashscreen
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.androidx.appcompat
+
+    // Serialization
+    implementation libs.kotlinx.serialization.json
+
+    // Coroutines
+    implementation libs.kotlinx.coroutines.core
+
+    // Embedded Server
+    implementation libs.ktor.server.core
+    implementation libs.ktor.server.netty
+    implementation libs.ktor.serialization.kotlinx.json
+    implementation libs.ktor.client.content.negotiation
+    implementation libs.ktor.server.content.negotiation
+    implementation libs.ktor.server.cors
+
+    // Unit testing libraries
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.inline
+    testImplementation libs.kotlin.test
+    testImplementation libs.kotlin.test.junit
+    testImplementation libs.androidx.ui.test.manifest
+    testImplementation libs.androidx.ui.test.junit4
+
+    // UI testing libraries
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+
+    // UI
+    implementation project(':foundation-ui')
+}
